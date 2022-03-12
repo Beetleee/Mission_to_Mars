@@ -4,12 +4,13 @@ import pandas as pd
 import datetime as dt
 from bs4 import BeautifulSoup as soup
 from webdriver_manager.chrome import ChromeDriverManager
+from pprint import pprint
 
 def scrape_all():
 # executable_path = {'executable_path': ChromeDriverManager().install()}
 # browser = Browser('chrome', **executable_path, headless=False)
    executable_path = {'executable_path': ChromeDriverManager(version = '98.0.4758.102').install()}
-   browser = Browser('chrome', **executable_path, headless=True)
+   browser = Browser('chrome', **executable_path, headless=False)
 
    news_title, news_paragraph = mars_news(browser)
    # Run all scraping functions and store results in a dictionary
@@ -20,8 +21,9 @@ def scrape_all():
     "featured_image": featured_image(browser),
     "facts": mars_facts(),
     "last_modified": dt.datetime.now(),
-    "hemisphere_image_urls": hemispheres(browser),
+    "hemispheres": hemispheres(browser)
     }
+
 
    # Stop webdriver and return data
    browser.quit()
@@ -92,9 +94,9 @@ def mars_facts():
         return None
 
     # Assign columns and set index of dataframe
-    df.columns=['Description', 'Mars', 'Earth']
-    df.set_index('Description', inplace=True)
-
+    df.columns=['description', 'Mars', 'Earth']
+    df.set_index('description', inplace=True)
+    df
     # Convert dataframe into HTML format, add bootstrap
     return df.to_html(classes="table table-striped")
 
@@ -117,9 +119,9 @@ def hemispheres(browser):
     images = []
     titles = []
     for item in parent:
-       images.append(url + item.find('a')['href'])
-       titles.append(item.find('h3').text.strip())
-    print(images)
+        images.append(url + item.find('a')['href'])
+        titles.append(item.find('h3').text.strip())
+    
 
     # 3B. create full length url template
     browser.visit(images[0])
@@ -127,35 +129,33 @@ def hemispheres(browser):
     img_soup = soup(html, 'html.parser')
 
     single_url = url + img_soup.find('img',class_='wide-image')['src']
+    print("line132",single_url)
 
     # 3C. create full length url  for each image
     img_urls = []
     for single_url in images:
-       browser.visit(single_url)
-       html = browser.html
-       img_soup = soup(html, 'html.parser')
-    #  3D. savetofile
-    single_url = url+img_soup.find('img',class_='wide-image')['src']
-    img_urls.append(single_url)
+        browser.visit(single_url)
+        html = browser.html
+        img_soup = soup(html, 'html.parser')
+        #  3D. savetofile-get large image
+        single_url = url+img_soup.find('img',class_='wide-image')['src']
+        img_urls.append(single_url)
 
     # 4. Print the list that holds the dictionary of each image url and title.
     hemisphere_image_urls = []
 
     for i in range(len(titles)):
-       hemisphere_image_urls.append({'title':titles[i],'img_url':img_urls[i]})
+        hemisphere_image_urls.append({'title':titles[i],'img_url':img_urls[i]})
 
     # 4A. Print the individual linked image url and title.
     for i in range(len(hemisphere_image_urls)):
-       print(hemisphere_image_urls[i]['title'])
-       print(hemisphere_image_urls[i]['img_url'] + '\n')
-
-    # 5. Quit the browser
-    browser.quit()
-
+        print(hemisphere_image_urls[i]['title'])
+        print(hemisphere_image_urls[i]['img_url'] + '\n')
+ 
     return hemisphere_image_urls
 
-
+    
 if __name__ == "__main__":
 
     # If running as script, print scraped data
-    print(scrape_all())
+    pprint(scrape_all())

@@ -153,11 +153,11 @@ for i in range(len(hemisphere_image_urls)):
     print(hemisphere_image_urls[i]['title'])
     print(hemisphere_image_urls[i]['img_url'] + '\n')
 
+
 # 5. Quit the browser
 browser.quit()
 
 hemisphere_image_urls
-
 
 
 
