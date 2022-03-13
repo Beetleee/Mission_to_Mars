@@ -17,16 +17,15 @@ I am tasked to analyze some new information for a Client who wants to incorporat
 
 ### Deliverable #2: Update the Web App with Mars’s Hemisphere Images and Titles
 
-#### 1) Mongo database is updated to contain the full-resolution image URL and title for each hemisphere image
-![](https://github.com/Beetleee/Mission_to_Mars/blob/main/apps/D2_1.png)
-#### 2) Index.html file contains code that will display thefull-resolution image URL and title for each hemisphere image
+
+#### 1) Index.html file contains code that will display thefull-resolution image URL and title for each hemisphere image
 ![](https://github.com/Beetleee/Mission_to_Mars/blob/main/apps/D2_2.png)
-#### 3) Web app contains all the information from this module and the full-resolution images and titles for the four hemisphere images
-![](https://github.com/Beetleee/Surfs_Up/blob/main/Resources/Dec%20stats.png)
+#### 2) Web app contains all the information from this module and the full-resolution images and titles for the four hemisphere images
+![](https://github.com/Beetleee/Mission_to_Mars/blob/main/apps/D2_1.png)
 
 ### Deliverable #3: Add Bootstrap 3 Components
 #### 1) Webpage is mobile-responsive
-![](https://github.com/Beetleee/Surfs_Up/blob/main/Resources/Dec%20stats.png)
+![](https://github.com/Beetleee/Mission_to_Mars/blob/main/apps/D3_1.png)
 
 
 ## Summary
